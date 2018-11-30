@@ -1,0 +1,20 @@
+{
+  "name": "mattermost-bullet-screen",
+  "version": "0.0.1",
+  "description": "get messages from mattermost and pipe to a bullet screen.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mattermost",
+    "bullet",
+    "screen"
+  ],
+  "author": "mike",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.0.10"
+  }
+}

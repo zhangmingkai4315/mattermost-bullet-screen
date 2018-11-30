@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <div id="messages">
+    </div>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        function showMessage(divId){
+          var colors = ['red', 'blue', 'Black', 'BlueViolet', 'Crimson', 'Darkorange', '#e68c32', 'Fuchsia', 'OrangeRed', 'SlateBlue', 'Teal'];
+          var messageWall = $(divId);
+          var temp;
+          const speed = 1000;   //每100px移动需要的时间 
+          return function (msg) {
+            var randomColor = colors[Math.floor(Math.random() * colors.length)];
+            do {
+              var top = Math.floor(Math.random() * 20) * 25 + 3;
+            }
+            while (top === temp);
+            temp = top;
+            var bullet = $('<span></span>').text(msg);
+            $(bullet).css('position', 'absolute');
+            $(bullet).css('top', top);
+            $(bullet).css('left', messageWall.width() + 'px');
+            $(bullet).css('color', randomColor);
+            $(bullet).css('font-size', '25px');
+            $(bullet).css('white-space', 'nowrap');
+            messageWall.append(bullet);
+            var destance = messageWall.width() * 2;
+            var during = destance/100*speed;
+            $(bullet).animate({
+                left: -destance + 'px'
+            }, during, 'linear');
+          };
+        }
+
+        $(document).ready(function(){
+          var socket = io('http://localhost:3000')
+          var popMessage = showMessage("#messages");
+          socket.on('message',function(msg){
+            console.log(msg)
+            popMessage(msg);
+          });
+        })
+    </script>
+  </body>
+</html>
